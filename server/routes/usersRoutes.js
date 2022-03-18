@@ -42,5 +42,30 @@ module.exports = (db) => {
       })
   });
 
+  
+  router.post("/login", (req, res) => {
+    const queryString = `
+    SELECT email, password FROM users
+    WHERE email = $1
+    AND password = $2`
+    ;
+    const email = req.body.email;
+    const password = req.body.password;
+  
+    const queryParams = [email, password];
+    return db
+      .query(queryString, queryParams)
+  
+      .then((data) => {
+        console.log('this is data', data)
+        const users = data.rows;
+        res.json({ users });   
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
+  });
+
+
   return router;
 };
