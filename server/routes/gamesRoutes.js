@@ -16,5 +16,19 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/games/:room", (req, res) => {
+    db.query(`SELECT * FROM games WHERE room_`)
+      .then(data => {
+        const games = data.rows;
+        res.json({ games });
+
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   return router;
 };
