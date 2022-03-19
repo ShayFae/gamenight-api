@@ -5,7 +5,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const usersRoutes = require('./routes/usersRoutes');
-const gamesRoutes = require('./routes/gamesRoutes');
+const appointmentsRoutes = require('./routes/appointmentsRoutes');
 const socketIo = require("socket.io");
 const http = require('http');
 const app = express();
@@ -25,14 +25,14 @@ const db = require('./configs/db.config');
 
 // routes
 app.use('/users', usersRoutes(db));
-app.use('/games', gamesRoutes(db));
+app.use('/appointments', appointmentsRoutes(db));
 
 app.get('/', (req, res) => {
 	res.json({ greetings: 'hello world' });
 })
 
 io.on('connection', () => {
-  console.log('a user connected');
+	console.log('a user connected');
 });
 
 

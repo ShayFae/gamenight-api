@@ -3,11 +3,10 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM games;`)
+    db.query(`SELECT * FROM appointments;`)
       .then(data => {
-        const games = data.rows;
-        res.json({ games });
-
+        const appointments = data.rows;
+        res.json({ appointments });
       })
       .catch(err => {
         res
@@ -16,11 +15,11 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/games/:room", (req, res) => {
-    db.query(`SELECT * FROM games WHERE room_`)
+  router.get("/appointments/:room", (req, res) => {
+    db.query(`SELECT * FROM appointments WHERE room_`)
       .then(data => {
-        const games = data.rows;
-        res.json({ games });
+        const appointments = data.rows;
+        res.json({ appointments });
 
       })
       .catch(err => {
