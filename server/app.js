@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 const db = require('./configs/db.config');
 
 // routes
-app.use('/users', usersRoutes(db));
-app.use('/appointments', appointmentsRoutes(db));
+app.use('/api/users', usersRoutes(db));
+app.use('/api/appointments', appointmentsRoutes(db));
 
 app.get('/', (req, res) => {
 	res.json({ greetings: 'hello world' });
