@@ -8,11 +8,12 @@ const usersRoutes = require('./routes/usersRoutes');
 const appointmentsRoutes = require('./routes/appointmentsRoutes');
 const gamesRoutes = require('./routes/gamesRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
-const socketIo = require("socket.io");
+const socketio = require('socket.io');
+
 const http = require('http');
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketio(server);
 
 // io.on('connection', () => {
 // 	console.log('A PLAYER HAS JOINED THE ARENA')
@@ -31,14 +32,17 @@ app.use('/api/appointments', appointmentsRoutes(db));
 app.use('/api/games', gamesRoutes(db));
 app.use('/api/categories', categoriesRoutes(db));
 
+io.on('connection', (socket) => {
+	console.log('a user connected');
+	socket.on('disconnect', () => {
+		console.log('User has left!!');
+	});
+
+});
 
 app.get('/', (req, res) => {
 	res.json({ greetings: 'hello world' });
 })
-
-io.on('connection', () => {
-	console.log('a user connected');
-});
 
 
 server.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
