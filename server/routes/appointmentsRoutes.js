@@ -41,18 +41,22 @@ module.exports = (db) => {
       })
   });
 
-  router.get("/appointments/:room", (req, res) => {
-    db.query(`SELECT * FROM appointments WHERE room_`)
-      .then(data => {
-        const appointments = data.rows;
-        res.json({ appointments });
+  router.post("/delete", (req, res) => {
+    const queryString = `DELETE FROM appointments
+    WHERE room = $1
+    RETURNING *;`;
+    const room_id = req.body.room_id
 
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    const queryParams = [
+      room_id,
+    ];
+  
+    return db.query(queryString, queryParams)
+    .then((data) => {
+      const remove = data.rows;
+      res.json({ remove });
+    })
+    .catch(err => console.log(err));
   });
 
   return router;
