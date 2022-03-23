@@ -18,6 +18,37 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.post("/new", (req, res) => {
+    const queryString = `
+    INSERT INTO games (name, image, category_id)
+    VALUES ($1,$2,$3)
+    RETURNING *
+    `
+    const name = req.body.game;
+    const image = req.body.image;
+    const category = req.body.category;
+    let category_id = 0;
+    if (category == 'Video Game') {
+      category_id = 1;
+    } else if (category == 'Card Game') {
+      category_id = 2;
+    } else {
+      category_id = 3;
+    }
+
+    const queryParams = [name, image, category_id]
+    return db
+      .query(queryString, queryParams)
+      .then((data) => {
+        // console.log('this is data', data)
+        const post = data.rows;
+        res.json({ post });
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
+  })
   return router;
 };
 
