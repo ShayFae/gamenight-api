@@ -8,12 +8,7 @@ const usersRoutes = require('./routes/usersRoutes');
 const appointmentsRoutes = require('./routes/appointmentsRoutes');
 const gamesRoutes = require('./routes/gamesRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
-// const http = require('http');
-// const socketio = require('socket.io');
-
 const app = express();
-// const server = http.createServer(app);
-
 
 // middleware setup
 app.use(morgan(ENVIROMENT));
@@ -28,12 +23,9 @@ app.use('/api/appointments', appointmentsRoutes(db));
 app.use('/api/games', gamesRoutes(db));
 app.use('/api/categories', categoriesRoutes(db));
 
-
-
 app.get('/', (req, res) => {
 	res.json({ greetings: 'hello world' });
 })
-
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 

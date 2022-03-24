@@ -14,7 +14,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  
+
   router.post("/new", (req, res) => {
     const queryString = `
     INSERT INTO appointments (title, description, image, category, game)
@@ -26,15 +26,12 @@ module.exports = (db) => {
     const category = req.body.category;
     const game = req.body.game;
 
-
     const queryParams = [title, description, image, category, game];
     return db
       .query(queryString, queryParams)
-  
       .then((data) => {
-        // console.log('this is data', data)
         const post = data.rows;
-        res.json({ post });   
+        res.json({ post });
       })
       .catch((error) => {
         console.log(error.message)
@@ -46,17 +43,16 @@ module.exports = (db) => {
     WHERE room = $1
     RETURNING *;`;
     const room_id = req.body.room_id
-
     const queryParams = [
       room_id,
     ];
-  
+
     return db.query(queryString, queryParams)
-    .then((data) => {
-      const remove = data.rows;
-      res.json({ remove });
-    })
-    .catch(err => console.log(err));
+      .then((data) => {
+        const remove = data.rows;
+        res.json({ remove });
+      })
+      .catch(err => console.log(err));
   });
 
   return router;
