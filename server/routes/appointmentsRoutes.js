@@ -40,7 +40,7 @@ module.exports = (db) => {
 
   router.post("/delete", (req, res) => {
     const queryString = `DELETE FROM appointments
-    WHERE room = $1
+    WHERE title = $1
     RETURNING *;`;
     const room_id = req.body.room_id
     const queryParams = [
